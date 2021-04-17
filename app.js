@@ -2,7 +2,10 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const {v4: uuidv4} = require('uuid');
 const dataBase = require('./dataBase').getInstance();
+const multer = require('multer')
+
 
 const app = express();
 const {
@@ -22,7 +25,17 @@ app.options('*', cors());
 
 dotenv.config();
 
-const {categoryRouter, noteRouter} = require("./routes");
+const {listRouter, todoRouter, uploadRouter} = require("./routes");
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public')
+    },
+    filename: function (req, file, cb) {
+
+        cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname)
+    }
+})
+const upload = multer({storage: storage});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -32,8 +45,9 @@ app.use(express.urlencoded({extended: true}));
 dataBase.setModels();
 const PORT = process.env.PORT;
 
-app.use('/category', categoryRouter);
-app.use('/note', noteRouter);
+app.use('/upload', upload.single('logo'), uploadRouter);
+app.use('/list', listRouter);
+app.use('/todo', todoRouter);
 
 
 app.use((req, res, next) => {

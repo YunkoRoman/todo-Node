@@ -1,18 +1,19 @@
 const dataBase = require('../dataBase/index').getInstance();
 
-class categoryController {
+class listController {
 
-    async saveCategory(req, res, next) {
+    async saveListName(req, res, next) {
 
         try {
-            const {text} = req.body;
-            console.log(text);
-            const categoryModel = dataBase.getModel('category');
 
-            const result = await categoryModel.create({
-                text
+            const {fileName, text} = req.body;
+
+            const listModel = dataBase.getModel('list');
+
+            const result = await listModel.create({
+                text,
+                fileName
             });
-
             res.json({
                 success: true,
                 msg: result
@@ -23,17 +24,18 @@ class categoryController {
         }
     }
 
-    async getAllCatgory(req, res, next) {
+    async getAllLists(req, res, next) {
         try {
-            const categoryModel = dataBase.getModel('category');
+            const listModel = dataBase.getModel('list');
 
-            const result = await categoryModel.findAll();
-            let sortArray = result.sort((a, b) => {
-                return new Date(a.dateLastNote) - new Date(b.dateLastNote)
-            });
+            const result = await listModel.findAll();
+
+            // let sortArray = result.sort((a, b) => {
+            //     return new Date(a.dateLastNote) - new Date(b.dateLastNote)
+            // });
             res.json({
                 success: true,
-                msg: sortArray
+                msg: result
             });
 
         } catch (e) {
@@ -79,4 +81,4 @@ class categoryController {
     }
 }
 
-module.exports = new categoryController()
+module.exports = new listController()

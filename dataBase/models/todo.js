@@ -1,34 +1,33 @@
-
 module.exports = function initFaq(sequelize, DataTypes) {
-     const note =sequelize.define('note', {
+    const note = sequelize.define('todo', {
         id: {
-            type:DataTypes.INTEGER,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         text: {
             type: DataTypes.TEXT
         },
-        category_id: {
+        list_id: {
             type: DataTypes.INTEGER,
 
-        },
-        name: {
-            type: DataTypes.STRING
         },
         date: {
             type: DataTypes.DATE
         },
+        checked: {
+          type: DataTypes.BOOLEAN
+        },
         updatedAt: DataTypes.DATE,
         createdAt: DataTypes.DATE,
 
-    },{
-        tableName: 'note',
+    }, {
+        tableName: 'todo',
 
     });
 
-    const category = sequelize.import('./category.js');
-    note.belongsTo(category, {foreignKey: 'category_id'});
+    const category = sequelize.import('./list.js');
+    note.belongsTo(category, {foreignKey: 'list_id'});
 
     return note
 }

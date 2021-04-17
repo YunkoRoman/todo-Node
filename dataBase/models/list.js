@@ -1,18 +1,19 @@
 
 module.exports = function initFaq(sequelize, DataTypes) {
-    return sequelize.define('category', {
+    return sequelize.define('list', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         text: DataTypes.TEXT,
+        fileName: DataTypes.STRING,
         dateLastNote: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
         createdAt: DataTypes.DATE,
 
     },{
-        tableName: 'category',
+        tableName: 'list',
 
     });
-}
+};

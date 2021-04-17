@@ -2,17 +2,18 @@ const dataBase = require('../dataBase/index').getInstance();
 
 class categoryController {
 
-    async saveNote(req, res, next) {
+    async saveTodo(req, res, next) {
 
         try {
-            const {text, name, date, category_id} = req.body;
-            const noteModel = dataBase.getModel('note');
+            const {text, startDate:date, list_id, checked} = req.body;
 
-            const result = await noteModel.create({
+            const todoModel = dataBase.getModel('todo');
+
+            const result = await todoModel.create({
                 text,
                 date,
-                name,
-                category_id
+                list_id,
+                checked
             });
 
             res.json({
@@ -25,13 +26,13 @@ class categoryController {
         }
     }
 
-    async deleteNote(req, res, next) {
+    async deleteTodo(req, res, next) {
         try {
             const {id} = req.params;
-            console.log(id);
-            const noteModel = dataBase.getModel('note');
 
-            const result = await noteModel.destroy({
+            const todoModel = dataBase.getModel('todo');
+
+            const result = await todoModel.destroy({
                 where: {
                     id
                 }
@@ -46,16 +47,16 @@ class categoryController {
         }
     }
 
-    async getNote(req, res, next) {
+    async getAllTodo(req, res, next) {
         try {
             const {id} = req.params;
 
-            const noteModel = dataBase.getModel('note');
+            const todoModel = dataBase.getModel('todo');
 
-            const result = await noteModel.findAll(
+            const result = await todoModel.findAll(
                 {
                     where: {
-                        category_id: id
+                        list_id: id
                     }
                 }
             );
@@ -73,17 +74,19 @@ class categoryController {
         }
     }
 
-    async changeNote(req, res, next) {
+    async changeСheckedTodo(req, res, next) {
         try {
             const {id} = req.params;
-            const {text, name, date} = req.body;
-            const noteModel = dataBase.getModel('note');
 
-            const result = await noteModel.update({text, name, date}, {
+            const {checked} = req.body;
+
+            const listModel = dataBase.getModel('todo');
+
+            const result = await listModel.update({checked}, {
                 where: {
                     id
                 }
-            })
+            });
             res.json({
                 success: true,
                 msg: result

@@ -8,22 +8,22 @@ module.exports = (() => {
 
     const params = config[env];
     function initConnection() {
-        const client = new Sequelize(process.env.DATABASE_URL, {
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false
-                }
-            },
-        });
-
-        // const client = new Sequelize(params.database, params.username, params.password, {
-        //     host: params.host,
-        //     dialect: params.dialect,
-        //     define: {
-        //         timestamps: false
-        //     }
+        // const client = new Sequelize(process.env.DATABASE_URL, {
+        //     dialectOptions: {
+        //         ssl: {
+        //             require: true,
+        //             rejectUnauthorized: false
+        //         }
+        //     },
         // });
+
+        const client = new Sequelize(params.database, params.username, params.password, {
+            host: params.host,
+            dialect: params.dialect,
+            define: {
+                timestamps: false
+            }
+        });
 
         let models = {};
         function  getModels() {

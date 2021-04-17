@@ -1,17 +1,18 @@
 /* eslint-disable no-unused-vars */
 module.exports = {
-    up: (queryInterface, Sequelize) => queryInterface.createTable('category', {
+    up: (queryInterface, Sequelize) => queryInterface.createTable('list', {
         id: {
             type: Sequelize.DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         text: Sequelize.DataTypes.TEXT,
+        filePath: Sequelize.DataTypes.STRING,
         dateLastNote: Sequelize.DataTypes.DATE,
         updatedAt: Sequelize.DataTypes.DATE,
         createdAt: Sequelize.DataTypes.DATE,
 
-    }).then(() => queryInterface.createTable('note', {
+    }).then(() => queryInterface.createTable('todo', {
         id: {
             type: Sequelize.DataTypes.INTEGER,
             autoIncrement: true,
@@ -20,10 +21,10 @@ module.exports = {
         text: {
             type: Sequelize.DataTypes.TEXT
         },
-        category_id: {
+        list_id: {
             type: Sequelize.DataTypes.INTEGER,
             references: {
-                model: 'category', // name of Target model
+                model: 'list', // name of Target model
                 key: 'id', // key in Target model that we're referencing
             },
             onUpdate: 'CASCADE',
@@ -40,8 +41,8 @@ module.exports = {
     })),
 
     down: (queryInterface, Sequelize) => queryInterface.sequelize.transaction((t) => Promise.all([
-        queryInterface.dropTable('category', {transaction: t}),
-        queryInterface.dropTable('note', {transaction: t}),
+        queryInterface.dropTable('list-name', {transaction: t}),
+        queryInterface.dropTable('to-do', {transaction: t}),
 
     ])),
 };
