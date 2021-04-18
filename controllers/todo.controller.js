@@ -94,8 +94,27 @@ class categoryController {
         } catch (e) {
             next(e)
         }
+    }
+    async editTodo(req, res, next) {
+        try {
+            const {id} = req.params;
 
+            const {text, date} = req.body;
 
+            const listModel = dataBase.getModel('todo');
+
+            const result = await listModel.update({text, date}, {
+                where: {
+                    id
+                }
+            });
+            res.json({
+                success: true,
+                msg: result
+            });
+        } catch (e) {
+            next(e)
+        }
     }
 }
 

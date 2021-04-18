@@ -6,6 +6,7 @@ router.post('/save', todoController.saveTodo);
 router.get('/:id', todoController.getAllTodo);
 router.delete('/:id', todoController.deleteTodo);
 router.put('/checked/:id', todoController.changeСheckedTodo);
+router.put('/:id', todoController.editTodo);
 
 
 module.exports = router;
