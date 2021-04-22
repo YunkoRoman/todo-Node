@@ -56,7 +56,35 @@ class categoryController {
             const result = await todoModel.findAll(
                 {
                     where: {
-                        list_id: id
+                        list_id: id,
+                        checked: false
+                    }
+                }
+            );
+            let sortArray = result.sort((a, b) => {
+                return new Date(a.date) - new Date(b.date)
+            });
+
+            res.json({
+                success: true,
+                msg: sortArray
+            });
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    async getAllCheckedTodo(req, res, next) {
+        try {
+
+            console.log('Check');
+            const todoModel = dataBase.getModel('todo');
+
+            const result = await todoModel.findAll(
+                {
+                    where: {
+                        checked: true
                     }
                 }
             );
