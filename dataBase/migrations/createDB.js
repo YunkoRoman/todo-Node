@@ -7,7 +7,7 @@ module.exports = {
             primaryKey: true,
         },
         text: Sequelize.DataTypes.TEXT,
-        filePath: Sequelize.DataTypes.STRING,
+        fileName: Sequelize.DataTypes.STRING,
         dateLastNote: Sequelize.DataTypes.DATE,
         updatedAt: Sequelize.DataTypes.DATE,
         createdAt: Sequelize.DataTypes.DATE,
@@ -29,6 +29,9 @@ module.exports = {
             },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',
+        },
+        checked: {
+            type: Sequelize.DataTypes.BOOLEAN
         },
         name: {
             type: Sequelize.DataTypes.STRING(128)
