@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const {v4: uuidv4} = require('uuid');
 const dataBase = require('./dataBase').getInstance();
 const multer = require('multer')
+const fs = require('fs');
+const publicDir = './public';
 
 
 const app = express();
@@ -12,6 +14,9 @@ const {
     StatusCodes,
     getReasonPhrase,
 } = require('http-status-codes');
+if (!fs.existsSync(publicDir)){
+    fs.mkdirSync(publicDir);
+}
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Credentials", true);
